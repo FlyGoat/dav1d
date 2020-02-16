@@ -42,13 +42,13 @@ static inline v8i16 vconstrain(const v8i16 diff, const int16_t threshold,
     if (!threshold) return zero;
     const uint16_t shift = imax(0, damping - ulog2(threshold));
     const v8i16 abs_diff = __msa_add_a_h(diff, zero); /* Get abs */
-    const v16u8 mask = __msa_clt_s_h(diff, zero);
+    const v16u8 mask = (v16u8)__msa_clt_s_h(diff, zero);
     const v8i16 thr = __msa_fill_h(threshold);
     const v8i16 sub = __msa_subv_h(thr, __msa_sra_h(abs_diff, __msa_fill_h(shift)));
     const v8i16 max = __msa_max_s_h(zero, sub);
     const v8i16 min = __msa_min_s_h(abs_diff, max);
     const v8i16 neg = __msa_subv_h(zero, min);
-    return __msa_bsel_v(min, neg, mask);
+    return __msa_bsel_v((v16u8)min, (v16u8)neg, mask);
 }
 
 static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
@@ -57,7 +57,7 @@ static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
                            const int w, const int h,
                            const enum CdefEdgeFlags edges)
 {
-    const v8u16 fill = __msa_fill_h((uint16_t)INT16_MAX);
+    const v8u16 fill = (v8u16)__msa_fill_h((int16_t)INT16_MAX);
 
     v8u16 l0;
     v8u16 l1;
