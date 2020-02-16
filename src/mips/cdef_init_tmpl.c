@@ -48,7 +48,7 @@ static inline v8i16 vconstrain(const v8i16 diff, const int16_t threshold,
     const v8i16 max = __msa_max_s_h(zero, sub);
     const v8i16 min = __msa_min_s_h(abs_diff, max);
     const v8i16 neg = __msa_subv_h(zero, min);
-    return __msa_bsel_v((v16u8)min, (v16u8)neg, mask);
+    return (v8i16)__msa_bsel_v((v16u8)min, (v16u8)neg, mask);
 }
 
 static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
@@ -70,8 +70,8 @@ static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
         l1 = fill;
         y_start = 0;
     } else {
-        l0 = u8h_to_u16(__msa_ld_h((top + 0 * src_stride - 2), 0);
-        l1 = u8h_to_u16(__msa_ld_h((top + 1 * src_stride - 2), 0);
+        l0 = u8h_to_u16(__msa_ld_h(top + 0 * src_stride - 2, 0));
+        l1 = u8h_to_u16(__msa_ld_h(top + 1 * src_stride - 2, 0));
     }
 
     __msa_st_h(l0, tmp - 2 * 8, 0);
@@ -82,8 +82,8 @@ static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
         l1 = fill;
         y_end -= 2;
     } else {
-        l0 = u8h_to_u16(__msa_ld_h((src - 2 + (h + 0) * src_stride), 0);
-        l1 = u8h_to_u16(__msa_ld_h((src - 2 + (h + 1) * src_stride), 0);
+        l0 = u8h_to_u16(__msa_ld_h(src - 2 + (h + 0) * src_stride, 0));
+        l1 = u8h_to_u16(__msa_ld_h(src - 2 + (h + 1) * src_stride, 0));
     }
 
     __msa_st_h(l0, tmp + (h + 0) * 8, 0);
