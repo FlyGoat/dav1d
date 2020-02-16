@@ -341,6 +341,7 @@ if host_machine.cpu_family().startswith('x86')
 endif
 
 cdata.set10('ARCH_PPC64LE', host_machine.cpu() == 'ppc64le')
+cdata.set10('ARCH_MIPS64EL', host_machine.cpu_family().startswith('mips'))
 
 if cc.symbols_have_underscore_prefix()
     cdata.set10('PREFIX', true)

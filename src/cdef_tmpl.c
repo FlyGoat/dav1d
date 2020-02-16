@@ -305,6 +305,8 @@ COLD void bitfn(dav1d_cdef_dsp_init)(Dav1dCdefDSPContext *const c) {
     bitfn(dav1d_cdef_dsp_init_arm)(c);
 #elif ARCH_PPC64LE
     bitfn(dav1d_cdef_dsp_init_ppc)(c);
+#elif ARCH_MIPS64EL
+    bitfn(dav1d_cdef_dsp_init_mips)(c);
 #elif ARCH_X86
     bitfn(dav1d_cdef_dsp_init_x86)(c);
 #endif

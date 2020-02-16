@@ -1,6 +1,6 @@
 /*
- * Copyright © 2018, VideoLAN and dav1d authors
- * Copyright © 2018, Two Orioles, LLC
+ * Copyright © 2019, VideoLAN and dav1d authors
+ * Copyright © 2019, Janne Grunau
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,27 +25,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DAV1D_SRC_CPU_H
-#define DAV1D_SRC_CPU_H
+#ifndef DAV1D_SRC_MIPS_CPU_H
+#define DAV1D_SRC_MIPS_CPU_H
 
-#include "config.h"
+enum CpuFlags {
+    DAV1D_MIPS_CPU_FLAG_MSA = 1 << 0,
+};
 
-#include "common/attributes.h"
+unsigned dav1d_get_cpu_flags_mips(void);
 
-#include "dav1d/common.h"
-
-#if ARCH_AARCH64 || ARCH_ARM
-#include "src/arm/cpu.h"
-#elif ARCH_PPC64LE
-#include "src/ppc/cpu.h"
-#elif ARCH_MIPS64EL
-#include "src/mips/cpu.h"
-#elif ARCH_X86
-#include "src/x86/cpu.h"
-#endif
-
-void dav1d_init_cpu(void);
-unsigned dav1d_get_cpu_flags(void);
-DAV1D_API void dav1d_set_cpu_flags_mask(unsigned mask);
-
-#endif /* DAV1D_SRC_CPU_H */
+#endif /* DAV1D_SRC_PPC_CPU_H */

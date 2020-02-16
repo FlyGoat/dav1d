@@ -42,6 +42,8 @@ COLD void dav1d_init_cpu(void) {
 #if HAVE_ASM
 #if ARCH_AARCH64 || ARCH_ARM
     flags = dav1d_get_cpu_flags_arm();
+#elif ARCH_MIPS64EL
+    flags = dav1d_get_cpu_flags_mips();
 #elif ARCH_PPC64LE
     flags = dav1d_get_cpu_flags_ppc();
 #elif ARCH_X86

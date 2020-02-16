@@ -1,6 +1,6 @@
 /*
- * Copyright © 2018, VideoLAN and dav1d authors
- * Copyright © 2018, Two Orioles, LLC
+ * Copyright © 2019, VideoLAN and dav1d authors
+ * Copyright © 2019, Luca Barbato
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,27 +25,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef DAV1D_SRC_CPU_H
-#define DAV1D_SRC_CPU_H
+#ifndef DAV1D_SRC_MIPS_TYPES_H
+#define DAV1D_SRC_MIPS_TYPES_H
 
-#include "config.h"
+#include <msa.h>
+#undef pixel
 
-#include "common/attributes.h"
+#define u8h_to_u16(v) ((u16x8) vec_mergeh((u8x16) v, vec_splat_u8(0)))
+#define u8l_to_u16(v) ((u16x8) vec_mergel((u8x16) v, vec_splat_u8(0)))
+#define u16h_to_i32(v) ((i32x4) vec_mergeh((u16x8) v, vec_splat_u16(0)))
+#define i16h_to_i32(v) ((i32x4) vec_unpackh((i16x8)v))
+#define u16l_to_i32(v) ((i32x4) vec_mergel((u16x8) v, vec_splat_u16(0)))
+#define i16l_to_i32(v) ((i32x4) vec_unpackl((i16x8)v))
 
-#include "dav1d/common.h"
-
-#if ARCH_AARCH64 || ARCH_ARM
-#include "src/arm/cpu.h"
-#elif ARCH_PPC64LE
-#include "src/ppc/cpu.h"
-#elif ARCH_MIPS64EL
-#include "src/mips/cpu.h"
-#elif ARCH_X86
-#include "src/x86/cpu.h"
-#endif
-
-void dav1d_init_cpu(void);
-unsigned dav1d_get_cpu_flags(void);
-DAV1D_API void dav1d_set_cpu_flags_mask(unsigned mask);
-
-#endif /* DAV1D_SRC_CPU_H */
+#endif /* DAV1D_SRC_PPC_TYPES_H */

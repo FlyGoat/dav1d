@@ -206,6 +206,14 @@ if is_asm_enabled
             'ppc/cdef_init_tmpl.c',
             'ppc/looprestoration_init_tmpl.c',
         )
+    elif host_machine.cpu_family().startswith('mips')
+        arch_flags = ['-mmsa']
+        libdav1d_sources += files(
+            'ppc/cpu.c',
+        )
+        libdav1d_arch_tmpl_sources += files(
+            'ppc/cdef_init_tmpl.c',
+        )
     endif
 endif
 
