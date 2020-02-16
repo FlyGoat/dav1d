@@ -197,7 +197,7 @@ static inline void copy8xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
 static inline v8i16 max_mask(v8i16 a, v8i16 b) {
     const v8i16 v8i16_INT16_MAX = __msa_fill_h((int16_t)INT16_MAX);
 
-    const v16u8 mask = __msa_ceqi_h(a, v8i16_INT16_MAX);
+    const v16u8 mask = __msa_ceq_h(a, v8i16_INT16_MAX);
 
     const v8i16 val = __msa_bsel_v(a, b, mask);
 
