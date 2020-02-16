@@ -90,7 +90,7 @@ static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
     __msa_st_h(l1, tmp + (h + 1) * 8, 0);
 
     for (int y = 0; y < h; y++) {
-        v8u16 l = u8h_to_u16((0, src - 2 + y * src_stride), 0);
+        v8u16 l = u8h_to_u16(__msa_ld_b(0, src - 2 + y * src_stride, 0);
         __msa_st_h(l, tmp + y * 8, 0);
     }
 
@@ -195,7 +195,7 @@ static inline void copy8xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
 }
 
 static inline v8i16 max_mask(v8i16 a, v8i16 b) {
-    const v8i16 v8i16_INT16_MAX = __msa_fill_h((int16_t)INT16_MAX);
+    const v8u16 v8i16_INT16_MAX = __msa_fill_h((int16_t)INT16_MAX);
 
     const v16u8 mask = __msa_ceqi_h(a, v8i16_INT16_MAX);
 
@@ -314,7 +314,7 @@ filter_4xN(pixel *dst, const ptrdiff_t dst_stride,
 
         MIN_MAX(p)
 
-        (p)
+        PRI_0(p)
         PRI_1(p)
 
         UPDATE_SUM(p)
