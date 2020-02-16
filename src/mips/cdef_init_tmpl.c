@@ -90,7 +90,7 @@ static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
     __msa_st_h(l1, tmp + (h + 1) * 8, 0);
 
     for (int y = 0; y < h; y++) {
-        v8u16 l = u8h_to_u16(__msa_ld_b(0, src - 2 + y * src_stride, 0));
+        v8u16 l = u8h_to_u16(__msa_ld_b(src - 2 + y * src_stride, 0));
         __msa_st_h(l, tmp + y * 8, 0);
     }
 
@@ -195,7 +195,7 @@ static inline void copy8xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
 }
 
 static inline v8i16 max_mask(v8i16 a, v8i16 b) {
-    const v8u16 v8i16_INT16_MAX = __msa_fill_h((int16_t)INT16_MAX);
+    const v8i16 v8i16_INT16_MAX = __msa_fill_h((int16_t)INT16_MAX);
 
     const v16u8 mask = __msa_ceqi_h(a, v8i16_INT16_MAX);
 
@@ -213,7 +213,7 @@ static inline v8i16 max_mask(v8i16 a, v8i16 b) {
 #define LOAD_PIX4(addr) \
     const v8i16 a = (v8i16)__msa_ld_h(addr, 0); \
     const v8i16 b = (v8i16)__msa_ld_h(addr + tmp_stride, 0); \
-    const v8i16 px = __msa_ilvr_d(a, b, 0); \
+    const v8i16 px = __msa_ilvr_d(a, b); \
     v8i16 max = px; \
     v8i16 min = px; \
     v8i16 sum = __msa_fill_h(0);
@@ -259,7 +259,7 @@ static inline v8i16 max_mask(v8i16 a, v8i16 b) {
 
 #define PRI_1(p) \
     p ## _c2 = __msa_subv_h(__msa_slli_h(p ## _c2, 2), __msa_sll_h(p ## _c2, __msa_fill_h(tap_even))); \
-    p ## _c3 = __msa_subv_h(__msa_slli_h(p ## _c3, 2)), __msa_sll_h((p ## _c3, __msa_fill_h(tap_even)));
+    p ## _c3 = __msa_subv_h(__msa_slli_h(p ## _c3, 2), __msa_sll_h(p ## _c3, __msa_fill_h(tap_even)));
 
 #define SEC_0(p) \
     p ## _c0 = __msa_slli_h(p ## _c0, 1); \
