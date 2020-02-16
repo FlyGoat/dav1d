@@ -90,7 +90,7 @@ static inline void copy4xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
     __msa_st_h(l1, tmp + (h + 1) * 8, 0);
 
     for (int y = 0; y < h; y++) {
-        v8u16 l = u8h_to_u16(__msa_ld_b(0, src - 2 + y * src_stride, 0);
+        v8u16 l = u8h_to_u16(__msa_ld_b(0, src - 2 + y * src_stride, 0));
         __msa_st_h(l, tmp + y * 8, 0);
     }
 
