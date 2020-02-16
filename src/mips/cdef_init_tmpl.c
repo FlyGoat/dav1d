@@ -134,8 +134,8 @@ static inline void copy8xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
         l1l = fill;
         y_start = 0;
     } else {
-        u8x16 l0 = __msa_ld_h(top + 0 * src_stride - 2, 0);
-        u8x16 l1 = __msa_ld_h(top + 1 * src_stride - 2, 0);
+        v16u8 l0 = __msa_ld_b(top + 0 * src_stride - 2, 0);
+        v16u8 l1 = __msa_ld_b(top + 1 * src_stride - 2, 0);
         l0h = u8h_to_u16(l0);
         l0l = u8l_to_u16(l0);
         l1h = u8h_to_u16(l1);
@@ -154,8 +154,8 @@ static inline void copy8xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
         l1l = fill;
         y_end -= 2;
     } else {
-        u8x16 l0 = __msa_ld_h(src - 2 + (h + 0) * src_stride, 0);
-        u8x16 l1 = __msa_ld_h(src - 2 + (h + 1) * src_stride, 0);
+        v16u8 l0 = __msa_ld_b(src - 2 + (h + 0) * src_stride, 0);
+        v16u8 l1 = __msa_ld_b(src - 2 + (h + 1) * src_stride, 0);
         l0h = u8h_to_u16(l0);
         l0l = u8l_to_u16(l0);
         l1h = u8h_to_u16(l1);
@@ -168,7 +168,7 @@ static inline void copy8xN(uint16_t *tmp, const ptrdiff_t tmp_stride,
     __msa_st_h(l1l, tmp + (h + 1) * 16 + 8, 0);
 
     for (int y = 0; y < h; y++) {
-        u8x16 l = __msa_ld_h(src - 2 + y * src_stride, 0);
+        v16u8 l = __msa_ld_b(src - 2 + y * src_stride, 0);
         v8u16 lh = u8h_to_u16(l);
         v8u16 ll = u8l_to_u16(l);
         __msa_st_h(lh, tmp + y * 16, 0);

@@ -31,11 +31,11 @@
 #include <msa.h>
 #undef pixel
 
-#define u8h_to_u16(v) ((u16x8) __msa_ilvev_b((v16u8) v, __msa_fill_b(0)))
-#define u8l_to_u16(v) ((u16x8) __msa_ilvod_b((v16u8) v, __msa_fill_b(0)))
-#define u16h_to_i32(v) ((v4i32) __msa_ilvev_h((u16x8) v, __msa_fill_h(0)))
+#define u8h_to_u16(v) ((v8u16) __msa_ilvev_b((v16u8) v, __msa_fill_b(0)))
+#define u8l_to_u16(v) ((v8u16) __msa_ilvod_b((v16u8) v, __msa_fill_b(0)))
+#define u16h_to_i32(v) ((v4i32) __msa_ilvev_h((v8u16) v, __msa_fill_h(0)))
 //#define i16h_to_i32(v) ((v4i32) vec_unpackh((v8i16)v))
-#define u16l_to_i32(v) ((v4i32) __msa_ilvod_h((u16x8) v, __msa_fill_h(0)))
+#define u16l_to_i32(v) ((v4i32) __msa_ilvod_h((v8u16) v, __msa_fill_h(0)))
 //#define i16l_to_i32(v) ((v4i32) vec_unpackl((v8i16)v))
 
 #endif /* DAV1D_SRC_PPC_TYPES_H */
